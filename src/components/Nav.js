@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,13 +16,11 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
-
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import TimerIcon from "@material-ui/icons/Timer";
 import InfoIcon from "@material-ui/icons/Info";
 import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
+import { slideOpen } from "../sounds";
 
 const drawerWidth = 240;
 
@@ -87,16 +86,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MiniDrawer() {
+export default function MiniDrawer({ slideOpen, slideClose }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
+    slideOpen.play();
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
+    slideClose.play();
     setOpen(false);
   };
 
@@ -109,7 +110,7 @@ export default function MiniDrawer() {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar>
+        <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -128,6 +129,7 @@ export default function MiniDrawer() {
           >
             <FiberManualRecordIcon /> Pomodoro Cards
           </Typography>
+          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
       <Drawer

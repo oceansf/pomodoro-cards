@@ -14,7 +14,7 @@ const TomatoesCard = ({ tomatoes }) => {
             <Typography variant="h5" style={{ margin: 5 }}>
               {todaysDate}
             </Typography>
-            <Divider />
+            <Divider style={{ margin: "0.5rem" }} />
             {tomatoes.length < 1 ? (
               <Typography
                 variant="h6"

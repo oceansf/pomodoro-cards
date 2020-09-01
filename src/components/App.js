@@ -10,6 +10,15 @@ import TimerControls from "./TimerControls";
 import TomatoesCard from "./TomatoesCard";
 import Nav from "./Nav";
 
+import {
+  click,
+  breakChimeUp,
+  breakChimeDown,
+  tomatoChime,
+  slideOpen,
+  slideClose,
+} from "../sounds";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -37,20 +46,27 @@ const App = () => {
   const [key, setKey] = useState(0);
 
   const toggle = () => {
+    click.play();
     setIsActive(!isActive);
   };
 
   const toggleBreak = () => {
+    if (breakIsActive) {
+      breakChimeDown.play();
+    } else {
+      breakChimeUp.play();
+    }
     setBreakIsActive(!breakIsActive);
   };
 
   const reset = () => {
-    // setKey(time);
+    click.play();
     setKey((prevKey) => prevKey + 1);
     setIsActive(false);
   };
 
   const addTomato = () => {
+    tomatoChime.play();
     setTomatoes([...tomatoes, { id: tomatoes.length, minutes: 25 }]);
   };
 
@@ -65,7 +81,7 @@ const App = () => {
 
   return (
     <React.Fragment>
-      <Nav />
+      <Nav slideOpen={slideOpen} slideClose={slideClose} />
       <Container className={classes.root} maxWidth="sm">
         <Typography className={classes.header} variant="h4">
           {isActive
@@ -110,12 +126,12 @@ const App = () => {
           </Typography>
         ) : null}
         {/* HELPER BUTTON */}
-        {/* <Button
+        <Button
           style={{ backgroundColor: "teal", color: "white", margin: "1rem" }}
           onClick={() => addTomato()}
         >
           Add Tomato (Test)
-        </Button> */}
+        </Button>
       </Container>
     </React.Fragment>
   );

@@ -92,13 +92,13 @@ const TimerControls = ({
           </Select>
         </FormControl>
         <FormControl className={classes.formControl}>
-          <InputLabel id="demo-simple-select-helper-label">
+          <InputLabel id="demo-simple-select-helper-label" color="secondary">
             Break Time
           </InputLabel>
           <Select
             className={classes.selectEmpty}
             disabled={breakIsActive ? true : false}
-            color="primary"
+            color="secondary"
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
             value={breakTimeSelect}
@@ -135,6 +135,7 @@ const TimerControls = ({
         </ButtonGroup>
         <Button
           className={classes.breakButton}
+          color="secondary"
           variant="outlined"
           size="large"
           onClick={() => toggleBreak()}
