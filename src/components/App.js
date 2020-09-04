@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import moment from "moment";
 // eslint-disable-next-line
 import format from "moment-duration-format";
@@ -18,6 +20,8 @@ import {
   slideOpen,
   slideClose,
 } from "../sounds";
+
+import firebase from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,7 +71,12 @@ const App = () => {
 
   const addTomato = () => {
     tomatoChime.play();
-    setTomatoes([...tomatoes, { id: tomatoes.length, minutes: 25 }]);
+    setTomatoes([...tomatoes, { id: tomatoes.length, minutes: time / 60 }]);
+    // Firebase
+    const itemsRef = firebase.database().ref("items");
+    const item = "tomato";
+    itemsRef.push(item);
+    console.log(itemsRef);
   };
 
   const mappedTomatoes = tomatoes.map((tomato) => tomato.minutes);
@@ -81,6 +90,8 @@ const App = () => {
 
   return (
     <React.Fragment>
+      <CssBaseline />
+      {/* <ResponsiveNav /> */}
       <Nav slideOpen={slideOpen} slideClose={slideClose} />
       <Container className={classes.root} maxWidth="sm">
         <Typography className={classes.header} variant="h4">

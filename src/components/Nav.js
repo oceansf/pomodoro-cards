@@ -1,9 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Hidden from "@material-ui/core/Hidden";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -20,7 +21,8 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import TimerIcon from "@material-ui/icons/Timer";
 import InfoIcon from "@material-ui/icons/Info";
 import ViewCarouselIcon from "@material-ui/icons/ViewCarousel";
-import { slideOpen } from "../sounds";
+
+import GoogleAuth from "../GoogleAuth";
 
 const drawerWidth = 240;
 
@@ -89,7 +91,9 @@ const useStyles = makeStyles((theme) => ({
 export default function MiniDrawer({ slideOpen, slideClose }) {
   const classes = useStyles();
   const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     slideOpen.play();
@@ -99,6 +103,10 @@ export default function MiniDrawer({ slideOpen, slideClose }) {
   const handleDrawerClose = () => {
     slideClose.play();
     setOpen(false);
+  };
+
+  const toggleMobileDrawer = () => {
+    setMobileOpen(!mobileOpen);
   };
 
   return (
@@ -114,7 +122,7 @@ export default function MiniDrawer({ slideOpen, slideClose }) {
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={matches ? toggleMobileDrawer : handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, {
               [classes.hide]: open,
@@ -129,54 +137,57 @@ export default function MiniDrawer({ slideOpen, slideClose }) {
           >
             <FiberManualRecordIcon /> Pomodoro Cards
           </Typography>
-          <Button color="inherit">Login</Button>
+          <GoogleAuth />
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
+
+      <Hidden xsDown implementation="css">
+        <Drawer
+          variant="permanent"
+          className={clsx(classes.drawer, {
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
-          }),
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <ListItem button>
-            <ListItemIcon style={{ margin: "center" }}>
-              <TimerIcon fontSize="large" />
-            </ListItemIcon>
-            <ListItemText>Timer</ListItemText>
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <ViewCarouselIcon fontSize="large" />
-            </ListItemIcon>
-            <ListItemText>My Cards</ListItemText>
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <InfoIcon fontSize="large" />
-            </ListItemIcon>
-            <ListItemText>About</ListItemText>
-          </ListItem>
-        </List>
-        <Divider />
-      </Drawer>
+          })}
+          classes={{
+            paper: clsx({
+              [classes.drawerOpen]: open,
+              [classes.drawerClose]: !open,
+            }),
+          }}
+        >
+          <div className={classes.toolbar}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "rtl" ? (
+                <ChevronRightIcon />
+              ) : (
+                <ChevronLeftIcon />
+              )}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <ListItem button>
+              <ListItemIcon style={{ margin: "center" }}>
+                <TimerIcon fontSize="large" />
+              </ListItemIcon>
+              <ListItemText>Timer</ListItemText>
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <ViewCarouselIcon fontSize="large" />
+              </ListItemIcon>
+              <ListItemText>My Cards</ListItemText>
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <InfoIcon fontSize="large" />
+              </ListItemIcon>
+              <ListItemText>About</ListItemText>
+            </ListItem>
+          </List>
+          <Divider />
+        </Drawer>
+      </Hidden>
       <main className={classes.content}>
         <div className={classes.toolbar} />
       </main>
