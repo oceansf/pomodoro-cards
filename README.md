@@ -2,4 +2,4 @@
 > A time-tracker used for the Pomodoro Method.
 
 ## Live Demo
-https://bit.ly/35SPNz3
+https://reverent-northcutt-2d6520.netlify.app
