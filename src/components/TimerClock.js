@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
@@ -12,11 +12,11 @@ const useStyles = makeStyles((theme) => ({
 		height: '18rem',
 		borderRadius: '100%',
 		background: '#FAFAFA',
-		boxShadow: '20px 20px 60px #d5d5d5, -20px -20px 60px #ffffff',
+		boxShadow: '20px 20px 25px #d5d5d5, -20px -20px 25px #ffffff',
 	},
 }));
 
-const Timer = ({ breakIsActive, toggleBreak, breakTime, key }) => {
+const Timer = ({ isActive, toggle, time, addTomato, key }) => {
 	const classes = useStyles();
 
 	return (
@@ -28,16 +28,26 @@ const Timer = ({ breakIsActive, toggleBreak, breakTime, key }) => {
 				alignItems="center"
 			>
 				<CountdownCircleTimer
-					isPlaying={breakIsActive ? true : false}
-					duration={breakTime}
+					isPlaying={isActive ? true : false}
+					duration={time}
 					key={key}
 					size={250}
 					strokeLinecap="square"
-					colors={[['#5efc82']]}
+					colors={[
+						['#d32f2f', 0.125],
+						['#e64a19', 0.125],
+						['#f57c00', 0.125],
+						['#ffa000', 0.125],
+						['#fbc02d', 0.125],
+						['#afb42b', 0.125],
+						['#689f38', 0.125],
+						['#43a047', 0.125],
+					]}
 					onComplete={() => {
-						toggleBreak();
+						toggle();
+						addTomato();
 						console.log('DONE');
-						return [true, 1500];
+						return [true, 0];
 					}}
 				>
 					{({ remainingTime }) => (

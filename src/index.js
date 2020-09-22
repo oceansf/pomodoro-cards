@@ -1,23 +1,23 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./components/App";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App';
 
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#e53935",
-    },
-    secondary: {
-      main: "#43a047",
-    },
-  },
+	palette: {
+		primary: {
+			main: '#d50000',
+		},
+		secondary: {
+			main: '#388e3c',
+		},
+	},
 });
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <App />
-  </ThemeProvider>,
-  document.getElementById("root")
+	<ThemeProvider theme={theme}>
+		<App />
+	</ThemeProvider>,
+	document.getElementById('root')
 );
