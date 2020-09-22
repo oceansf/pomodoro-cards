@@ -19,13 +19,16 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: 'column',
 		alignItems: 'center',
 	},
-	appBar: {
-		margin: 0,
-	},
 	header: {
 		marginTop: '4rem',
 		marginBottom: '2rem',
 		textAlign: 'center',
+	},
+	bg: {
+		backgroundColor: '#f4f4f4',
+		backgroundRepeat: 'repeat-y',
+		height: '100vh',
+		width: '100vw',
 	},
 }));
 
@@ -76,59 +79,61 @@ const App = () => {
 
 	return (
 		<React.Fragment>
-			<CssBaseline />
-			<AppBar />
-			<Container className={classes.root} maxWidth="sm">
-				<Typography className={classes.header} variant="h4">
-					{isActive
-						? 'Session is in progress!'
-						: 'Get ready to begin a session..'}
-				</Typography>
-				{breakIsActive ? (
-					<BreakTimer
-						breakIsActive={breakIsActive}
-						toggleBreak={toggleBreak}
-						breakTime={breakTime}
-						setBreakIsActive={setBreakIsActive}
-						key={key}
-					/>
-				) : (
-					<TimerClock
-						isActive={isActive}
-						toggle={toggle}
-						time={time}
-						addTomato={addTomato}
-						setIsActive={setIsActive}
-						key={key}
-					/>
-				)}
-
-				<TimerControls
-					toggle={toggle}
-					toggleBreak={toggleBreak}
-					reset={reset}
-					isActive={isActive}
-					breakIsActive={breakIsActive}
-					setTime={setTime}
-					setBreakTime={setBreakTime}
-				/>
-				<TomatoesCard tomatoes={tomatoes} />
-				{tomatoes.length > 0 ? (
-					<Typography variant="h4" style={{ margin: '2.5rem' }}>
-						Total Time:{' '}
-						{moment
-							.duration(totalTomatoes(), 'minutes')
-							.format('h [hrs] m [min]')}
+			<div className={classes.bg}>
+				<CssBaseline />
+				<AppBar />
+				<Container className={classes.root} maxWidth="sm">
+					<Typography className={classes.header} variant="h4">
+						{isActive
+							? 'Session is in progress!'
+							: 'Get ready to begin a session..'}
 					</Typography>
-				) : null}
-				{/* HELPER BUTTON */}
-				{/* <Button
+					{breakIsActive ? (
+						<BreakTimer
+							breakIsActive={breakIsActive}
+							toggleBreak={toggleBreak}
+							breakTime={breakTime}
+							setBreakIsActive={setBreakIsActive}
+							key={key}
+						/>
+					) : (
+						<TimerClock
+							isActive={isActive}
+							toggle={toggle}
+							time={time}
+							addTomato={addTomato}
+							setIsActive={setIsActive}
+							key={key}
+						/>
+					)}
+
+					<TimerControls
+						toggle={toggle}
+						toggleBreak={toggleBreak}
+						reset={reset}
+						isActive={isActive}
+						breakIsActive={breakIsActive}
+						setTime={setTime}
+						setBreakTime={setBreakTime}
+					/>
+					<TomatoesCard tomatoes={tomatoes} />
+					{tomatoes.length > 0 ? (
+						<Typography variant="h4" style={{ margin: '2.5rem' }}>
+							Total Time:{' '}
+							{moment
+								.duration(totalTomatoes(), 'minutes')
+								.format('h [hrs] m [min]')}
+						</Typography>
+					) : null}
+					{/* HELPER BUTTON */}
+					{/* <Button
 					style={{ backgroundColor: 'teal', color: 'white', margin: '1rem' }}
 					onClick={() => addTomato()}
 				>
 					Add Tomato (Test)
 				</Button> */}
-			</Container>
+				</Container>
+			</div>
 		</React.Fragment>
 	);
 };

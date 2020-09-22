@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 		width: '18rem',
 		height: '18rem',
 		borderRadius: '100%',
-		background: '#FAFAFA',
+		background: '#F4F4F4',
 		boxShadow: '20px 20px 25px #d5d5d5, -20px -20px 25px #ffffff',
 	},
 }));
