@@ -4,7 +4,7 @@ import moment from 'moment';
 // eslint-disable-next-line
 import format from 'moment-duration-format';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, Typography, Button } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import AppBar from './AppBar';
 import TimerClock from './TimerClock';
 import BreakTimer from './BreakTimer';
