@@ -122,12 +122,12 @@ const App = () => {
 					</Typography>
 				) : null}
 				{/* HELPER BUTTON */}
-				<Button
+				{/* <Button
 					style={{ backgroundColor: 'teal', color: 'white', margin: '1rem' }}
 					onClick={() => addTomato()}
 				>
 					Add Tomato (Test)
-				</Button>
+				</Button> */}
 			</Container>
 		</React.Fragment>
 	);
