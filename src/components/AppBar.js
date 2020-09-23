@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	appBar: {
 		width: '95%',
-		margin: '1rem',
+		margin: 'auto',
 		padding: '0.5rem',
 		borderRadius: '50px',
 		background: '#f4f4f4',
@@ -45,7 +45,7 @@ export default function ButtonAppBar() {
 						variant="h5"
 						className={classes.title}
 						color="primary"
-						align={'center'}
+						align="center"
 					>
 						Pomodoro Tracker
 					</Typography>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { useWindowSize } from '../hooks';
 import moment from 'moment';
 // eslint-disable-next-line
 import format from 'moment-duration-format';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, Typography } from '@material-ui/core';
+import { Container, Box, Typography } from '@material-ui/core';
 import AppBar from './AppBar';
 import TimerClock from './TimerClock';
 import BreakTimer from './BreakTimer';
@@ -26,14 +26,14 @@ const useStyles = makeStyles((theme) => ({
 	},
 	bg: {
 		backgroundColor: '#f4f4f4',
-		backgroundRepeat: 'repeat-y',
-		height: '100vh',
-		width: '100vw',
 	},
 }));
 
 const App = () => {
 	const classes = useStyles();
+
+	const size = useWindowSize();
+
 	const [tomatoes, setTomatoes] = useState([]);
 
 	const [time, setTime] = useState(1500);
@@ -79,8 +79,7 @@ const App = () => {
 
 	return (
 		<React.Fragment>
-			<div className={classes.bg}>
-				<CssBaseline />
+			<Box className={classes.bg} height={size.height}>
 				<AppBar />
 				<Container className={classes.root} maxWidth="sm">
 					<Typography className={classes.header} variant="h4">
@@ -133,7 +132,7 @@ const App = () => {
 					Add Tomato (Test)
 				</Button> */}
 				</Container>
-			</div>
+			</Box>
 		</React.Fragment>
 	);
 };
