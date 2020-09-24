@@ -13,6 +13,11 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import StopIcon from '@material-ui/icons/Stop';
 
+import useSound from 'use-sound';
+import clickSfx from '../sounds/click_03.wav';
+import breakStartSfx from '../sounds/chord_soft_mid_up.wav';
+import breakEndSfx from '../sounds/chord_soft_mid_down.wav';
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: 'flex',
@@ -82,6 +87,10 @@ const TimerControls = ({
 	// Default selected menu item
 	const [workTimeSelect, setWorkTimeSelect] = useState(1500);
 	const [breakTimeSelect, setBreakTimeSelect] = useState(300);
+
+	const [playClickSound] = useSound(clickSfx);
+	const [playBreakStart] = useSound(breakStartSfx);
+	const [playBreakEnd] = useSound(breakEndSfx);
 
 	const handleWorkTimeChange = (event) => {
 		reset();
@@ -153,6 +162,7 @@ const TimerControls = ({
 							disableRipple
 							disabled={breakIsActive ? true : false}
 							onClick={() => toggle()}
+							onMouseDown={playClickSound}
 						>
 							<PauseIcon />
 						</Button>
@@ -163,6 +173,7 @@ const TimerControls = ({
 							disableRipple
 							disabled={breakIsActive ? true : false}
 							onClick={() => toggle()}
+							onMouseDown={playClickSound}
 						>
 							<PlayArrowIcon />
 						</Button>
@@ -174,6 +185,7 @@ const TimerControls = ({
 						disableRipple
 						disabled={breakIsActive ? true : false}
 						onClick={() => reset()}
+						onMouseDown={playClickSound}
 					>
 						<StopIcon />
 					</Button>
@@ -186,6 +198,7 @@ const TimerControls = ({
 					size="large"
 					disabled={isActive ? true : false}
 					onClick={() => toggleBreak()}
+					onMouseDown={breakIsActive ? playBreakEnd : playBreakStart}
 				>
 					Take a break
 				</Button>

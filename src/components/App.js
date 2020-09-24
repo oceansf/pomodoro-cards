@@ -11,7 +11,8 @@ import BreakTimer from './BreakTimer';
 import TimerControls from './TimerControls';
 import TomatoesCard from './TomatoesCard';
 
-import { click, breakChimeUp, breakChimeDown, tomatoChime } from '../sounds';
+import useSound from 'use-sound';
+import bellSfx from '../sounds/chime_bell_timer.wav';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -43,30 +44,28 @@ const App = () => {
 	const [isActive, setIsActive] = useState(false);
 	const [breakIsActive, setBreakIsActive] = useState(false);
 
+	const [playBell] = useSound(bellSfx);
+
 	const [key, setKey] = useState(0);
 
 	const toggle = () => {
-		click.play();
 		setIsActive(!isActive);
 	};
 
 	const toggleBreak = () => {
 		if (breakIsActive) {
-			breakChimeDown.play();
 		} else {
-			breakChimeUp.play();
 		}
 		setBreakIsActive(!breakIsActive);
 	};
 
 	const reset = () => {
-		click.play();
 		setKey((prevKey) => prevKey + 1);
 		setIsActive(false);
 	};
 
 	const addTomato = () => {
-		tomatoChime.play();
+		playBell();
 		setTomatoes([...tomatoes, { id: tomatoes.length, minutes: time / 60 }]);
 	};
 
@@ -128,11 +127,11 @@ const App = () => {
 					) : null}
 					{/* HELPER BUTTON */}
 					{/* <Button
-					style={{ backgroundColor: 'teal', color: 'white', margin: '1rem' }}
-					onClick={() => addTomato()}
-				>
-					Add Tomato (Test)
-				</Button> */}
+						style={{ backgroundColor: 'teal', color: 'white', margin: '1rem' }}
+						onClick={() => addTomato()}
+					>
+						Add Tomato (Test)
+					</Button> */}
 				</Container>
 			</Box>
 		</React.Fragment>
