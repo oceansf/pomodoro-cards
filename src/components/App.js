@@ -25,6 +25,14 @@ import Footer from './Footer';
 
 import useSound from 'use-sound';
 import bellSfx from '../sounds/chime_bell_timer.wav';
+// controls sounds
+import clickSfx from '../sounds/click_03.wav';
+import breakStartSfx from '../sounds/chord_soft_mid_up.wav';
+import breakEndSfx from '../sounds/chord_soft_mid_down.wav';
+// appbar sounds
+import slideOpenSfx from '../sounds/slide_right.wav';
+import slideCloseSfx from '../sounds/slide_left.wav';
+import snapSfx from '../sounds/click_snap_lo.wav';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -62,6 +70,16 @@ const App = () => {
 			type: darkMode ? 'dark' : 'light',
 		},
 	});
+
+	// SOUNDS
+	const [playMenuOpen] = useSound(slideOpenSfx);
+	const [playMenuClose] = useSound(slideCloseSfx);
+	const [playSnap] = useSound(snapSfx, { volume: 0.5 });
+
+	// SOUNDS
+	const [playClickSound] = useSound(clickSfx, { volume: 0.25 });
+	const [playBreakStart] = useSound(breakStartSfx);
+	const [playBreakEnd] = useSound(breakEndSfx);
 
 	const toggleDarkMode = () => {
 		setDarkMode(!darkMode);
@@ -111,7 +129,13 @@ const App = () => {
 				<CssBaseline />
 				<Paper className={darkMode ? null : classes.bg} elevation={0}>
 					<Box className={classes.appBarWrapper}>
-						<AppBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+						<AppBar
+							darkMode={darkMode}
+							toggleDarkMode={toggleDarkMode}
+							playMenuOpen={playMenuOpen}
+							playMenuClose={playMenuClose}
+							playSnap={playSnap}
+						/>
 					</Box>
 					<Container className={classes.root} maxWidth="sm">
 						<Typography className={classes.header} variant="h4">
@@ -149,6 +173,9 @@ const App = () => {
 							setTime={setTime}
 							setBreakTime={setBreakTime}
 							darkMode={darkMode}
+							playClickSound={playClickSound}
+							playBreakStart={playBreakStart}
+							playBreakEnd={playBreakEnd}
 						/>
 						<TomatoesCard tomatoes={tomatoes} darkMode={darkMode} />
 						{tomatoes.length > 0 ? (

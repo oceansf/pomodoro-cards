@@ -17,12 +17,13 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import Brightness2Icon from '@material-ui/icons/Brightness2';
 
-import useSound from 'use-sound';
-import slideOpenSfx from '../sounds/slide_right.wav';
-import slideCloseSfx from '../sounds/slide_left.wav';
-import snapSfx from '../sounds/click_snap_lo.wav';
-
-export default function ButtonAppBar({ toggleDarkMode, darkMode }) {
+export default function ButtonAppBar({
+	toggleDarkMode,
+	darkMode,
+	playMenuOpen,
+	playMenuClose,
+	playSnap,
+}) {
 	const useStyles = makeStyles((theme) => ({
 		root: {
 			flexGrow: 1,
@@ -65,11 +66,6 @@ export default function ButtonAppBar({ toggleDarkMode, darkMode }) {
 	const classes = useStyles();
 
 	const [drawerIsOpen, setDrawerIsOpen] = useState(false);
-
-	// SOUNDS
-	const [playMenuOpen] = useSound(slideOpenSfx);
-	const [playMenuClose] = useSound(slideCloseSfx);
-	const [playSnap] = useSound(snapSfx, { volume: 0.5 });
 
 	return (
 		<div className={classes.root}>

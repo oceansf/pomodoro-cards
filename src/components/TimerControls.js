@@ -13,11 +13,6 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import StopIcon from '@material-ui/icons/Stop';
 
-import useSound from 'use-sound';
-import clickSfx from '../sounds/click_03.wav';
-import breakStartSfx from '../sounds/chord_soft_mid_up.wav';
-import breakEndSfx from '../sounds/chord_soft_mid_down.wav';
-
 const TimerControls = ({
 	toggle,
 	reset,
@@ -27,6 +22,9 @@ const TimerControls = ({
 	setBreakTime,
 	toggleBreak,
 	darkMode,
+	playClickSound,
+	playBreakStart,
+	playBreakEnd,
 }) => {
 	const useStyles = makeStyles((theme) => ({
 		root: {
@@ -94,11 +92,6 @@ const TimerControls = ({
 	// Default selected menu item
 	const [workTimeSelect, setWorkTimeSelect] = useState(1500);
 	const [breakTimeSelect, setBreakTimeSelect] = useState(300);
-
-	// SOUNDS
-	const [playClickSound] = useSound(clickSfx, { volume: 0.25 });
-	const [playBreakStart] = useSound(breakStartSfx);
-	const [playBreakEnd] = useSound(breakEndSfx);
 
 	const handleWorkTimeChange = (event) => {
 		reset();
