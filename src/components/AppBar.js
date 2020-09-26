@@ -16,10 +16,14 @@ import MenuIcon from '@material-ui/icons/Menu';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import Brightness2Icon from '@material-ui/icons/Brightness2';
+import VolumeUpIcon from '@material-ui/icons/VolumeUp';
+import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 
 export default function ButtonAppBar({
 	toggleDarkMode,
 	darkMode,
+	muted,
+	setMuted,
 	playMenuOpen,
 	playMenuClose,
 	playSnap,
@@ -61,6 +65,11 @@ export default function ButtonAppBar({
 			'&:hover': {
 				color: '#ff1744',
 			},
+		},
+		iconBtn: {
+			display: 'relative',
+			left: '87%',
+			marginTop: '8px',
 		},
 	}));
 	const classes = useStyles();
@@ -137,6 +146,13 @@ export default function ButtonAppBar({
 					<Brightness2Icon className={classes.moonIcon} fontSize="small" />
 				</Toolbar>
 			</AppBar>
+			<IconButton
+				className={classes.iconBtn}
+				size="small"
+				onClick={() => setMuted(!muted)}
+			>
+				{muted ? <VolumeOffIcon /> : <VolumeUpIcon />}
+			</IconButton>
 		</div>
 	);
 }

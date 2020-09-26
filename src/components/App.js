@@ -40,9 +40,9 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: 'column',
 		alignItems: 'center',
 	},
-	header: {
-		marginTop: '4rem',
-		marginBottom: '2rem',
+	headerText: {
+		marginTop: '1rem',
+		marginBottom: '3rem',
 		textAlign: 'center',
 	},
 	bg: {
@@ -71,19 +71,32 @@ const App = () => {
 		},
 	});
 
-	// SOUNDS
-	const [playMenuOpen] = useSound(slideOpenSfx);
-	const [playMenuClose] = useSound(slideCloseSfx);
-	const [playSnap] = useSound(snapSfx, { volume: 0.5 });
-
-	// SOUNDS
-	const [playClickSound] = useSound(clickSfx, { volume: 0.25 });
-	const [playBreakStart] = useSound(breakStartSfx);
-	const [playBreakEnd] = useSound(breakEndSfx);
-
 	const toggleDarkMode = () => {
 		setDarkMode(!darkMode);
 	};
+
+	const [muted, setMuted] = useState(false);
+
+	const volume = () => {
+		if (muted) {
+			return { volume: 0 };
+		} else {
+			return { volume: 0.5 };
+		}
+	};
+
+	// SOUNDS: App
+	const [playBell] = useSound(bellSfx, volume());
+
+	// SOUNDS: AppBar
+	const [playMenuOpen] = useSound(slideOpenSfx, volume());
+	const [playMenuClose] = useSound(slideCloseSfx, volume());
+	const [playSnap] = useSound(snapSfx, volume());
+
+	// SOUNDS: TimerControls
+	const [playClickSound] = useSound(clickSfx, volume());
+	const [playBreakStart] = useSound(breakStartSfx, volume());
+	const [playBreakEnd] = useSound(breakEndSfx, volume());
 
 	const [tomatoes, setTomatoes] = useState([]);
 
@@ -91,8 +104,6 @@ const App = () => {
 	const [breakTime, setBreakTime] = useState(300);
 	const [isActive, setIsActive] = useState(false);
 	const [breakIsActive, setBreakIsActive] = useState(false);
-
-	const [playBell] = useSound(bellSfx);
 
 	const [key, setKey] = useState(0);
 
@@ -135,10 +146,12 @@ const App = () => {
 							playMenuOpen={playMenuOpen}
 							playMenuClose={playMenuClose}
 							playSnap={playSnap}
+							muted={muted}
+							setMuted={setMuted}
 						/>
 					</Box>
 					<Container className={classes.root} maxWidth="sm">
-						<Typography className={classes.header} variant="h4">
+						<Typography className={classes.headerText} variant="h4">
 							{isActive
 								? 'Session is in progress!'
 								: 'Get ready to begin a session..'}
