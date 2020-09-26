@@ -6,15 +6,16 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 const todaysDate = moment().format('MMM Do, YYYY');
 
-const useStyles = makeStyles((theme) => ({
-	boxShadow: {
-		borderRadius: '25px',
-		background: '#FAFAFA',
-		boxShadow: '20px 20px 25px #e1e1e1, -20px -20px 25px #ffffff',
-	},
-}));
-
-const TomatoesCard = ({ tomatoes }) => {
+const TomatoesCard = ({ tomatoes, darkMode }) => {
+	const useStyles = makeStyles((theme) => ({
+		boxShadow: {
+			borderRadius: '25px',
+			background: darkMode ? '#424242' : '#f4f4f4',
+			boxShadow: darkMode
+				? '20px 20px 25px #383838, -20px -20px 25px #4c4c4c'
+				: '20px 20px 25px #dcdcdc, -20px -20px 25px #ffffff',
+		},
+	}));
 	const classes = useStyles();
 
 	return (

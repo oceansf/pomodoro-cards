@@ -18,62 +18,6 @@ import clickSfx from '../sounds/click_03.wav';
 import breakStartSfx from '../sounds/chord_soft_mid_up.wav';
 import breakEndSfx from '../sounds/chord_soft_mid_down.wav';
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		margin: 40,
-	},
-	buttonGroup: {
-		margin: '2rem',
-	},
-	button: {
-		margin: '1rem 0.5rem',
-		padding: '1rem',
-		borderRadius: '100%',
-		background: '#F4F4F4',
-		boxShadow: '8px 8px 15px #d2d2d2, -8px -8px 15px #ffffff;',
-		color: '#d50000',
-		transition: 'all 0.3s ease',
-		'&:hover': {
-			color: '#ff5131',
-			background: '#F4F4F4',
-			boxShadow: '8px 8px 15px #d2d2d2, -8px -8px 15px #ffffff;',
-		},
-		'&:active': {
-			color: '#9b0000',
-			background: 'linear-gradient(145deg, #dcdcdc, #ffffff, #ffffff)',
-			// boxShadow: '0px 0px 0px #d2d2d2, -0px -0px 0px #ffffff;',
-		},
-	},
-	breakButton: {
-		margin: '1rem',
-		padding: '1rem 2rem',
-		borderRadius: '50px',
-		background: '#F4F4F4',
-		boxShadow: '8px 8px 15px #d2d2d2, -8px -8px 15px #ffffff;',
-		color: '#00b248',
-		transition: 'all 0.3s ease',
-		'&:hover': {
-			color: '#66ffa6',
-			background: '#F4F4FA',
-			boxShadow: '8px 8px 15px #d2d2d2, -8px -8px 15px #ffffff;',
-		},
-		'&:active': {
-			background: 'linear-gradient(145deg, #dcdcdc, #ffffff, #ffffff)',
-			// boxShadow: '0px 0px 0px #d2d2d2, -0px -0px 0px #ffffff;',
-		},
-	},
-	formControl: {
-		margin: theme.spacing(1),
-		minWidth: 120,
-	},
-	selectEmpty: {
-		marginTop: theme.spacing(2),
-	},
-}));
-
 const TimerControls = ({
 	toggle,
 	reset,
@@ -82,13 +26,77 @@ const TimerControls = ({
 	setTime,
 	setBreakTime,
 	toggleBreak,
+	darkMode,
 }) => {
+	const useStyles = makeStyles((theme) => ({
+		root: {
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center',
+			margin: 40,
+		},
+		button: {
+			margin: '1rem 0.5rem',
+			padding: '1rem',
+			borderRadius: '100%',
+			background: darkMode ? '#424242' : '#f4f4f4',
+			boxShadow: darkMode
+				? '8px 8px 15px #383838, -8px -8px 15px #4c4c4c'
+				: '8px 8px 15px #dcdcdc, -8px -8px 15px #ffffff',
+			color: '#d50000',
+			transition: 'all 0.3s ease',
+			'&:hover': {
+				color: '#ff5131',
+				background: darkMode ? '#424242' : '#F4F4F4',
+				boxShadow: darkMode
+					? '8px 8px 15px #383838, -8px -8px 15px #4c4c4c'
+					: '8px 8px 15px #dcdcdc, -8px -8px 15px #ffffff',
+			},
+			'&:active': {
+				color: '#9b0000',
+				background: darkMode
+					? 'linear-gradient(145deg, #383838, #4c4c4c, #4c4c4c)'
+					: 'linear-gradient(145deg, #dcdcdc, #ffffff, #ffffff)',
+			},
+		},
+		breakButton: {
+			margin: '1rem',
+			padding: '1rem 2rem',
+			borderRadius: '50px',
+			background: darkMode ? '#424242' : '#f4f4f4',
+			boxShadow: darkMode
+				? '8px 8px 15px #383838, -8px -8px 15px #4c4c4c'
+				: '8px 8px 15px #dcdcdc, -8px -8px 15px #ffffff',
+			color: '#00b248',
+			transition: 'all 0.3s ease',
+			'&:hover': {
+				color: '#66ffa6',
+				background: darkMode ? '#424242' : '#F4F4F4',
+				boxShadow: darkMode
+					? '8px 8px 15px #383838, -8px -8px 15px #4c4c4c'
+					: '8px 8px 15px #dcdcdc, -8px -8px 15px #ffffff',
+			},
+			'&:active': {
+				background: darkMode
+					? 'linear-gradient(145deg, #383838, #4c4c4c, #4c4c4c)'
+					: 'linear-gradient(145deg, #dcdcdc, #ffffff, #ffffff)',
+			},
+		},
+		formControl: {
+			margin: theme.spacing(1),
+			minWidth: 120,
+		},
+		selectEmpty: {
+			marginTop: theme.spacing(2),
+		},
+	}));
 	const classes = useStyles();
 	// Default selected menu item
 	const [workTimeSelect, setWorkTimeSelect] = useState(1500);
 	const [breakTimeSelect, setBreakTimeSelect] = useState(300);
 
-	const [playClickSound] = useSound(clickSfx);
+	// SOUNDS
+	const [playClickSound] = useSound(clickSfx, { volume: 0.25 });
 	const [playBreakStart] = useSound(breakStartSfx);
 	const [playBreakEnd] = useSound(breakEndSfx);
 
@@ -146,14 +154,6 @@ const TimerControls = ({
 						<MenuItem value={1800}>30 minutes</MenuItem>
 					</Select>
 				</FormControl>
-				{/* <ButtonGroup
-					className={classes.buttonGroup}
-					disabled={breakIsActive ? true : false}
-					disableRipple
-					color="primary"
-					variant="contained"
-					aria-label="contained primary button group"
-				> */}
 				<Box>
 					{isActive ? (
 						<Button
@@ -189,7 +189,6 @@ const TimerControls = ({
 					>
 						<StopIcon />
 					</Button>
-					{/* </ButtonGroup> */}
 				</Box>
 				<Button
 					className={classes.breakButton}
@@ -198,7 +197,7 @@ const TimerControls = ({
 					size="large"
 					disabled={isActive ? true : false}
 					onClick={() => toggleBreak()}
-					onMouseDown={breakIsActive ? playBreakEnd : playBreakStart}
+					onMouseUp={breakIsActive ? playBreakEnd : playBreakStart}
 				>
 					Take a break
 				</Button>

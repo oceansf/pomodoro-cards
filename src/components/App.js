@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
-import { useWindowSize } from '../hooks';
 import moment from 'moment';
 // eslint-disable-next-line
 import format from 'moment-duration-format';
-import { makeStyles } from '@material-ui/core/styles';
-import { Container, Box, Typography } from '@material-ui/core';
+import {
+	createMuiTheme,
+	ThemeProvider,
+	makeStyles,
+} from '@material-ui/core/styles';
+import {
+	CssBaseline,
+	Container,
+	Box,
+	Typography,
+	Paper,
+} from '@material-ui/core';
+// import { Button } from '@material-ui/core';
+
 import AppBar from './AppBar';
 import TimerClock from './TimerClock';
-import BreakTimer from './BreakTimer';
+import BreakClock from './BreakClock';
 import TimerControls from './TimerControls';
 import TomatoesCard from './TomatoesCard';
+import Footer from './Footer';
 
 import useSound from 'use-sound';
 import bellSfx from '../sounds/chime_bell_timer.wav';
@@ -26,16 +38,34 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: 'center',
 	},
 	bg: {
-		padding: '2em',
+		// paddingTop: '2em',
+		// height: '100vh',
 		backgroundColor: '#f4f4f4',
-		backgroundSize: 'cover',
+	},
+	appBarWrapper: {
+		paddingTop: '2rem',
 	},
 }));
 
 const App = () => {
 	const classes = useStyles();
+	const [darkMode, setDarkMode] = useState(false);
 
-	const size = useWindowSize();
+	const theme = createMuiTheme({
+		palette: {
+			primary: {
+				main: '#d50000',
+			},
+			secondary: {
+				main: '#388e3c',
+			},
+			type: darkMode ? 'dark' : 'light',
+		},
+	});
+
+	const toggleDarkMode = () => {
+		setDarkMode(!darkMode);
+	};
 
 	const [tomatoes, setTomatoes] = useState([]);
 
@@ -53,9 +83,6 @@ const App = () => {
 	};
 
 	const toggleBreak = () => {
-		if (breakIsActive) {
-		} else {
-		}
 		setBreakIsActive(!breakIsActive);
 	};
 
@@ -80,60 +107,73 @@ const App = () => {
 
 	return (
 		<React.Fragment>
-			<Box className={classes.bg} height={size.height}>
-				<AppBar />
-				<Container className={classes.root} maxWidth="sm">
-					<Typography className={classes.header} variant="h4">
-						{isActive
-							? 'Session is in progress!'
-							: 'Get ready to begin a session..'}
-					</Typography>
-					{breakIsActive ? (
-						<BreakTimer
-							breakIsActive={breakIsActive}
-							toggleBreak={toggleBreak}
-							breakTime={breakTime}
-							setBreakIsActive={setBreakIsActive}
-							key={key}
-						/>
-					) : (
-						<TimerClock
-							isActive={isActive}
-							toggle={toggle}
-							time={time}
-							addTomato={addTomato}
-							setIsActive={setIsActive}
-							key={key}
-						/>
-					)}
-
-					<TimerControls
-						toggle={toggle}
-						toggleBreak={toggleBreak}
-						reset={reset}
-						isActive={isActive}
-						breakIsActive={breakIsActive}
-						setTime={setTime}
-						setBreakTime={setBreakTime}
-					/>
-					<TomatoesCard tomatoes={tomatoes} />
-					{tomatoes.length > 0 ? (
-						<Typography variant="h4" style={{ margin: '2.5rem' }}>
-							Total Time:{' '}
-							{moment
-								.duration(totalTomatoes(), 'minutes')
-								.format('h [hrs] m [min]')}
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<Paper className={darkMode ? null : classes.bg} elevation={0}>
+					<Box className={classes.appBarWrapper}>
+						<AppBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+					</Box>
+					<Container className={classes.root} maxWidth="sm">
+						<Typography className={classes.header} variant="h4">
+							{isActive
+								? 'Session is in progress!'
+								: 'Get ready to begin a session..'}
 						</Typography>
-					) : null}
-					{/* HELPER BUTTON */}
-					{/* <Button
-						style={{ backgroundColor: 'teal', color: 'white', margin: '1rem' }}
-						onClick={() => addTomato()}
-					>
-						Add Tomato (Test)
-					</Button> */}
-				</Container>
-			</Box>
+						{breakIsActive ? (
+							<BreakClock
+								breakIsActive={breakIsActive}
+								toggleBreak={toggleBreak}
+								breakTime={breakTime}
+								setBreakIsActive={setBreakIsActive}
+								key={key}
+								darkMode={darkMode}
+							/>
+						) : (
+							<TimerClock
+								isActive={isActive}
+								toggle={toggle}
+								time={time}
+								addTomato={addTomato}
+								setIsActive={setIsActive}
+								key={key}
+								darkMode={darkMode}
+							/>
+						)}
+
+						<TimerControls
+							toggle={toggle}
+							toggleBreak={toggleBreak}
+							reset={reset}
+							isActive={isActive}
+							breakIsActive={breakIsActive}
+							setTime={setTime}
+							setBreakTime={setBreakTime}
+							darkMode={darkMode}
+						/>
+						<TomatoesCard tomatoes={tomatoes} darkMode={darkMode} />
+						{tomatoes.length > 0 ? (
+							<Typography variant="h4" style={{ margin: '2.5rem' }}>
+								Total Time:{' '}
+								{moment
+									.duration(totalTomatoes(), 'minutes')
+									.format('h [hrs] m [min]')}
+							</Typography>
+						) : null}
+						{/* HELPER BUTTON */}
+						{/* <Button
+							style={{
+								backgroundColor: 'teal',
+								color: 'white',
+								margin: '1rem',
+							}}
+							onClick={() => addTomato()}
+						>
+							Add Tomato (Test)
+						</Button> */}
+					</Container>
+				</Paper>
+				<Footer darkMode={darkMode} />
+			</ThemeProvider>
 		</React.Fragment>
 	);
 };

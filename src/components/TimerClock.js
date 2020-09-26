@@ -6,17 +6,18 @@ import moment from 'moment';
 // eslint-disable-next-line
 import momentDurationFormatSetup from 'moment-duration-format';
 
-const useStyles = makeStyles((theme) => ({
-	boxShadow: {
-		width: '18rem',
-		height: '18rem',
-		borderRadius: '100%',
-		background: '#F4F4F4',
-		boxShadow: '20px 20px 25px #d5d5d5, -20px -20px 25px #ffffff',
-	},
-}));
-
-const Timer = ({ isActive, toggle, time, addTomato, key }) => {
+const Timer = ({ isActive, toggle, time, addTomato, key, darkMode }) => {
+	const useStyles = makeStyles((theme) => ({
+		boxShadow: {
+			width: '18rem',
+			height: '18rem',
+			borderRadius: '100%',
+			background: darkMode ? '#424242' : '#F4F4F4',
+			boxShadow: darkMode
+				? '20px 20px 25px #383838, -20px -20px 25px #4c4c4c'
+				: '20px 20px 25px #d5d5d5, -20px -20px 25px #ffffff',
+		},
+	}));
 	const classes = useStyles();
 
 	return (
@@ -33,6 +34,7 @@ const Timer = ({ isActive, toggle, time, addTomato, key }) => {
 					key={key}
 					size={250}
 					strokeLinecap="square"
+					trailColor={darkMode ? '#696969' : '#d9d9d9'}
 					colors={[
 						['#d32f2f', 0.125],
 						['#e64a19', 0.125],
