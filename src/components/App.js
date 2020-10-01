@@ -14,7 +14,8 @@ import {
 	Typography,
 	Paper,
 } from '@material-ui/core';
-import { Button } from '@material-ui/core';
+// HELPER BUTTON
+// import { Button } from '@material-ui/core';
 
 import AppBar from './AppBar';
 import TimerClock from './TimerClock';
@@ -199,7 +200,7 @@ const App = () => {
 							</Typography>
 						) : null}
 						{/* HELPER BUTTON */}
-						<Button
+						{/* <Button
 							style={{
 								backgroundColor: 'teal',
 								color: 'white',
@@ -208,7 +209,7 @@ const App = () => {
 							onClick={() => addTomato()}
 						>
 							Add Tomato (Test)
-						</Button>
+						</Button> */}
 					</Container>
 				</Paper>
 				<Footer darkMode={darkMode} />
