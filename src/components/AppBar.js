@@ -19,6 +19,11 @@ import Brightness2Icon from '@material-ui/icons/Brightness2';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 
+import { useAuthState } from 'react-firebase-hooks/auth';
+
+import firebase from '../firebase';
+const auth = firebase.auth();
+
 export default function ButtonAppBar({
 	toggleDarkMode,
 	darkMode,
@@ -76,8 +81,21 @@ export default function ButtonAppBar({
 
 	const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
+	const [user] = useAuthState(auth);
+
+	const signInWithGoogle = async () => {
+		const provider = new firebase.auth.GoogleAuthProvider();
+		await auth.signInWithPopup(provider);
+		setDrawerIsOpen(false);
+	};
+
+	const signOut = () => {
+		auth.signOut();
+		window.location.reload();
+	};
+
 	return (
-		<div className={classes.root}>
+		<React.Fragment>
 			<AppBar className={classes.appBar} position="static" elevation={0}>
 				<Toolbar>
 					<IconButton
@@ -121,8 +139,16 @@ export default function ButtonAppBar({
 							<ListItem button className={classes.listItem} divider>
 								<ListItemText>ABOUT</ListItemText>
 							</ListItem>
-							<ListItem button className={classes.listItem}>
-								<ListItemText>LOGIN</ListItemText>
+							<ListItem
+								button
+								className={classes.listItem}
+								onClick={() => {
+									user ? signOut() : signInWithGoogle();
+								}}
+							>
+								<ListItemText>
+									{user ? 'SIGN OUT' : 'SIGN IN WITH GOOGLE'}
+								</ListItemText>
 							</ListItem>
 						</List>
 					</SwipeableDrawer>
@@ -153,6 +179,6 @@ export default function ButtonAppBar({
 			>
 				{muted ? <VolumeOffIcon /> : <VolumeUpIcon />}
 			</IconButton>
-		</div>
+		</React.Fragment>
 	);
 }

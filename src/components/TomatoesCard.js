@@ -1,12 +1,20 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import moment from 'moment';
-import { Box, Card, CardContent, Typography, Divider } from '@material-ui/core';
+import {
+	Box,
+	Card,
+	CardContent,
+	Typography,
+	Divider,
+	Tooltip,
+	Zoom,
+} from '@material-ui/core';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 const todaysDate = moment().format('MMM Do, YYYY');
 
-const TomatoesCard = ({ tomatoes, darkMode }) => {
+const TomatoesCard = ({ tomatoes, time, darkMode }) => {
 	const useStyles = makeStyles((theme) => ({
 		boxShadow: {
 			borderRadius: '25px',
@@ -15,8 +23,23 @@ const TomatoesCard = ({ tomatoes, darkMode }) => {
 				? '20px 20px 25px #383838, -20px -20px 25px #4c4c4c'
 				: '20px 20px 25px #dcdcdc, -20px -20px 25px #ffffff',
 		},
+		tomato: {
+			'&:hover': {
+				cursor: 'pointer',
+			},
+		},
 	}));
 	const classes = useStyles();
+
+	const LightTooltip = withStyles((theme) => ({
+		tooltip: {
+			backgroundColor: '#FFF',
+			color: 'rgba(0, 0, 0, 0.87)',
+			boxShadow: theme.shadows[1],
+			fontSize: 14,
+			fontWeight: 'bold',
+		},
+	}))(Tooltip);
 
 	return (
 		<React.Fragment>
@@ -36,11 +59,19 @@ const TomatoesCard = ({ tomatoes, darkMode }) => {
 							</Typography>
 						) : (
 							tomatoes.map((tomato) => (
-								<FiberManualRecordIcon
-									color="primary"
-									fontSize="large"
+								<LightTooltip
+									title={`${tomato.minutes} minutes`}
+									placement="top"
+									TransitionComponent={Zoom}
 									key={tomato.id}
-								/>
+								>
+									<FiberManualRecordIcon
+										className={classes.tomato}
+										color="primary"
+										fontSize="large"
+										key={tomato.id}
+									/>
+								</LightTooltip>
 							))
 						)}
 					</CardContent>

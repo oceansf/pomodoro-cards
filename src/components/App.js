@@ -14,7 +14,7 @@ import {
 	Typography,
 	Paper,
 } from '@material-ui/core';
-// import { Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 import AppBar from './AppBar';
 import TimerClock from './TimerClock';
@@ -25,11 +25,11 @@ import Footer from './Footer';
 
 import useSound from 'use-sound';
 import bellSfx from '../sounds/chime_bell_timer.wav';
-// controls sounds
+// TimerControls sounds
 import clickSfx from '../sounds/click_03.wav';
 import breakStartSfx from '../sounds/chord_soft_mid_up.wav';
 import breakEndSfx from '../sounds/chord_soft_mid_down.wav';
-// appbar sounds
+// AppBar sounds
 import slideOpenSfx from '../sounds/slide_right.wav';
 import slideCloseSfx from '../sounds/slide_left.wav';
 import snapSfx from '../sounds/click_snap_lo.wav';
@@ -46,8 +46,6 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: 'center',
 	},
 	bg: {
-		// paddingTop: '2em',
-		// height: '100vh',
 		backgroundColor: '#f4f4f4',
 	},
 	appBarWrapper: {
@@ -98,15 +96,16 @@ const App = () => {
 	const [playBreakStart] = useSound(breakStartSfx, volume());
 	const [playBreakEnd] = useSound(breakEndSfx, volume());
 
+	// STATE:
 	const [tomatoes, setTomatoes] = useState([]);
-
 	const [time, setTime] = useState(1500);
 	const [breakTime, setBreakTime] = useState(300);
 	const [isActive, setIsActive] = useState(false);
 	const [breakIsActive, setBreakIsActive] = useState(false);
 
-	const [key, setKey] = useState(0);
+	const [key, setKey] = useState(0); // Used for CountdownCircleTimer component
 
+	// FUNCTIONS:
 	const toggle = () => {
 		setIsActive(!isActive);
 	};
@@ -190,7 +189,7 @@ const App = () => {
 							playBreakStart={playBreakStart}
 							playBreakEnd={playBreakEnd}
 						/>
-						<TomatoesCard tomatoes={tomatoes} darkMode={darkMode} />
+						<TomatoesCard tomatoes={tomatoes} darkMode={darkMode} time={time} />
 						{tomatoes.length > 0 ? (
 							<Typography variant="h4" style={{ margin: '2.5rem' }}>
 								Total Time:{' '}
@@ -200,7 +199,7 @@ const App = () => {
 							</Typography>
 						) : null}
 						{/* HELPER BUTTON */}
-						{/* <Button
+						<Button
 							style={{
 								backgroundColor: 'teal',
 								color: 'white',
@@ -209,7 +208,7 @@ const App = () => {
 							onClick={() => addTomato()}
 						>
 							Add Tomato (Test)
-						</Button> */}
+						</Button>
 					</Container>
 				</Paper>
 				<Footer darkMode={darkMode} />

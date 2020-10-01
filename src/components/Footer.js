@@ -24,7 +24,7 @@ function Footer({ darkMode }) {
 		<Box>
 			<Paper className={classes.root} elevation={0} square>
 				<footer className={classes.copy}>
-					<small>&copy; {date.getUTCFullYear()} Ocean Fuaga</small>{' '}
+					<small>Copyright &copy; {date.getUTCFullYear()} Ocean Fuaga</small>{' '}
 				</footer>
 			</Paper>
 		</Box>
