@@ -11,6 +11,7 @@ import {
 	Divider,
 	ListItem,
 	Switch,
+	Avatar
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
@@ -19,10 +20,10 @@ import Brightness2Icon from '@material-ui/icons/Brightness2';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 
+import firebase from 'firebase/app';
+import { signInWithGoogle } from '../firebase/config';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-import firebase from '../firebase';
-const auth = firebase.auth();
 
 export default function ButtonAppBar({
 	toggleDarkMode,
@@ -81,18 +82,43 @@ export default function ButtonAppBar({
 
 	const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
-	const [user] = useAuthState(auth);
+	const [user, loading, error] = useAuthState(firebase.auth());
 
-	const signInWithGoogle = async () => {
-		const provider = new firebase.auth.GoogleAuthProvider();
-		await auth.signInWithPopup(provider);
-		setDrawerIsOpen(false);
-	};
+	const handleSignIn = () => {
+		signInWithGoogle();
+	}
 
-	const signOut = () => {
-		auth.signOut();
+	const handleSignOut = () => {
+		firebase.auth().signOut();
 		window.location.reload();
-	};
+	}
+
+
+	const SignInButton = () => {
+		if (user) {
+			return (
+				<ListItem
+					button
+					className={classes.listItem}
+					onClick={handleSignOut}
+				>
+					<Avatar src={user.photoURL} alt={user.displayName}/>
+					<ListItemText>SIGN OUT</ListItemText>
+				</ListItem>
+			)
+		} else {
+			return (
+				<ListItem
+					button
+					className={classes.listItem}
+					onClick={handleSignIn}
+				>
+					<ListItemText>SIGN IN WITH GOOGLE</ListItemText>
+				</ListItem>
+			)
+		}
+	}
+
 
 	return (
 		<React.Fragment>
@@ -139,17 +165,7 @@ export default function ButtonAppBar({
 							<ListItem button className={classes.listItem} divider>
 								<ListItemText>ABOUT</ListItemText>
 							</ListItem>
-							<ListItem
-								button
-								className={classes.listItem}
-								onClick={() => {
-									user ? signOut() : signInWithGoogle();
-								}}
-							>
-								<ListItemText>
-									{user ? 'SIGN OUT' : 'SIGN IN WITH GOOGLE'}
-								</ListItemText>
-							</ListItem>
+							<SignInButton />
 						</List>
 					</SwipeableDrawer>
 					<Typography

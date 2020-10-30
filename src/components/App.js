@@ -10,6 +10,7 @@ import {
 import {
 	CssBaseline,
 	Container,
+	Button,
 	Box,
 	Typography,
 	Paper,
@@ -150,6 +151,7 @@ const App = () => {
 							setMuted={setMuted}
 						/>
 					</Box>
+					{/* MAIN TIMER PAGE */}
 					<Container className={classes.root} maxWidth="sm">
 						<Typography className={classes.headerText} variant="h4">
 							{isActive
@@ -200,7 +202,7 @@ const App = () => {
 							</Typography>
 						) : null}
 						{/* HELPER BUTTON */}
-						{/* <Button
+						<Button
 							style={{
 								backgroundColor: 'teal',
 								color: 'white',
@@ -209,7 +211,7 @@ const App = () => {
 							onClick={() => addTomato()}
 						>
 							Add Tomato (Test)
-						</Button> */}
+						</Button>
 					</Container>
 				</Paper>
 				<Footer darkMode={darkMode} />
