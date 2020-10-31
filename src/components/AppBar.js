@@ -77,12 +77,15 @@ export default function ButtonAppBar({
 			left: '87%',
 			marginTop: '8px',
 		},
+		avatar: {
+			border: '2px solid #ff1744'
+		}
 	}));
 	const classes = useStyles();
 
 	const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
-	const [user, loading, error] = useAuthState(firebase.auth());
+	const [user] = useAuthState(firebase.auth());
 
 	const handleSignIn = () => {
 		signInWithGoogle();
@@ -102,8 +105,8 @@ export default function ButtonAppBar({
 					className={classes.listItem}
 					onClick={handleSignOut}
 				>
-					<Avatar src={user.photoURL} alt={user.displayName}/>
-					<ListItemText>SIGN OUT</ListItemText>
+					<Avatar src={user.photoURL} alt={user.displayName} className={classes.avatar}/>
+						<ListItemText inset>SIGN OUT</ListItemText>
 				</ListItem>
 			)
 		} else {
