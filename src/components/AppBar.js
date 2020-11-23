@@ -112,7 +112,7 @@ export default function ButtonAppBar({
 								color="primary"
 								variant="h6"
 							>
-								<FiberManualRecordIcon fontSize="large" /> Pomodoro Tracker
+								<FiberManualRecordIcon fontSize="large" /> Pomodoro Cards
 							</Typography>
 							<Divider />
 							<ListItem button className={classes.listItem}>
@@ -132,7 +132,7 @@ export default function ButtonAppBar({
 						color="primary"
 						align="center"
 					>
-						Pomodoro Tracker
+						Pomodoro Cards
 					</Typography>
 					<Brightness7Icon className={classes.sunIcon} fontSize="small" />
 					<Switch
