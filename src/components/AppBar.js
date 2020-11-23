@@ -11,7 +11,6 @@ import {
 	Divider,
 	ListItem,
 	Switch,
-	Avatar
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
@@ -19,11 +18,6 @@ import Brightness7Icon from '@material-ui/icons/Brightness7';
 import Brightness2Icon from '@material-ui/icons/Brightness2';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
-
-import firebase from 'firebase/app';
-import { signInWithGoogle } from '../firebase/config';
-import { useAuthState } from 'react-firebase-hooks/auth';
-
 
 export default function ButtonAppBar({
 	toggleDarkMode,
@@ -78,50 +72,12 @@ export default function ButtonAppBar({
 			marginTop: '8px',
 		},
 		avatar: {
-			border: '2px solid #ff1744'
-		}
+			border: '2px solid #ff1744',
+		},
 	}));
 	const classes = useStyles();
 
 	const [drawerIsOpen, setDrawerIsOpen] = useState(false);
-
-	const [user] = useAuthState(firebase.auth());
-
-	const handleSignIn = () => {
-		signInWithGoogle();
-	}
-
-	const handleSignOut = () => {
-		firebase.auth().signOut();
-		window.location.reload();
-	}
-
-
-	const SignInButton = () => {
-		if (user) {
-			return (
-				<ListItem
-					button
-					className={classes.listItem}
-					onClick={handleSignOut}
-				>
-					<Avatar src={user.photoURL} alt={user.displayName} className={classes.avatar}/>
-						<ListItemText inset>SIGN OUT</ListItemText>
-				</ListItem>
-			)
-		} else {
-			return (
-				<ListItem
-					button
-					className={classes.listItem}
-					onClick={handleSignIn}
-				>
-					<ListItemText>SIGN IN WITH GOOGLE</ListItemText>
-				</ListItem>
-			)
-		}
-	}
-
 
 	return (
 		<React.Fragment>
@@ -162,13 +118,12 @@ export default function ButtonAppBar({
 							<ListItem button className={classes.listItem}>
 								<ListItemText>TIMER</ListItemText>
 							</ListItem>
-							<ListItem button className={classes.listItem}>
-								<ListItemText>MY CARDS</ListItemText>
+							<ListItem button disabled className={classes.listItem}>
+								<ListItemText>MY CARDS (COMING SOON)</ListItemText>
 							</ListItem>
 							<ListItem button className={classes.listItem} divider>
 								<ListItemText>ABOUT</ListItemText>
 							</ListItem>
-							<SignInButton />
 						</List>
 					</SwipeableDrawer>
 					<Typography

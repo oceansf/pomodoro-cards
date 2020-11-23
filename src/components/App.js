@@ -10,7 +10,7 @@ import {
 import {
 	CssBaseline,
 	Container,
-	Button,
+	// Button,
 	Box,
 	Typography,
 	Paper,
@@ -202,7 +202,7 @@ const App = () => {
 							</Typography>
 						) : null}
 						{/* HELPER BUTTON */}
-						<Button
+						{/* <Button
 							style={{
 								backgroundColor: 'teal',
 								color: 'white',
@@ -211,7 +211,7 @@ const App = () => {
 							onClick={() => addTomato()}
 						>
 							Add Tomato (Test)
-						</Button>
+						</Button> */}
 					</Container>
 				</Paper>
 				<Footer darkMode={darkMode} />

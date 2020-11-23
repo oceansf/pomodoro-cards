@@ -3,7 +3,6 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import {
 	Box,
-	Button,
 	Card,
 	CardContent,
 	Typography,
@@ -29,14 +28,6 @@ const TomatoesCard = ({ tomatoes, time, darkMode }) => {
 				cursor: 'pointer',
 			},
 		},
-		saveBtnWrapper: {
-			width: '100%',
-			display: 'flex',
-			justifyContent: 'flex-end'
-		},
-		saveBtn: {
-			borderRadius: '10px'
-		}
 	}));
 	const classes = useStyles();
 
@@ -82,12 +73,7 @@ const TomatoesCard = ({ tomatoes, time, darkMode }) => {
 									/>
 								</LightTooltip>
 							))
-							)}
-						<Box className={classes.saveBtnWrapper}>
-							{tomatoes.length >= 1 ? (
-								<Button color="primary" className={classes.saveBtn}>Save Results</Button>
-								) : null}
-						</Box>
+						)}
 					</CardContent>
 				</Card>
 			</Box>
