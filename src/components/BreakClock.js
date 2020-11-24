@@ -6,7 +6,14 @@ import moment from 'moment';
 // eslint-disable-next-line
 import momentDurationFormatSetup from 'moment-duration-format';
 
-const Timer = ({ breakIsActive, toggleBreak, breakTime, key, darkMode }) => {
+const Timer = ({
+	breakIsActive,
+	toggleBreak,
+	playBreakEnd,
+	breakTime,
+	key,
+	darkMode,
+}) => {
 	const useStyles = makeStyles((theme) => ({
 		boxShadow: {
 			width: '18rem',
@@ -38,7 +45,7 @@ const Timer = ({ breakIsActive, toggleBreak, breakTime, key, darkMode }) => {
 					colors={[['#5efc82']]}
 					onComplete={() => {
 						toggleBreak();
-						console.log('DONE');
+						playBreakEnd();
 						return [true, 1500];
 					}}
 				>

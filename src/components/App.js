@@ -162,6 +162,7 @@ const App = () => {
 							<BreakClock
 								breakIsActive={breakIsActive}
 								toggleBreak={toggleBreak}
+								playBreakEnd={playBreakEnd}
 								breakTime={breakTime}
 								setBreakIsActive={setBreakIsActive}
 								key={key}
